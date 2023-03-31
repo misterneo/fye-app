@@ -21,6 +21,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->bind(
+            'App\Services\AuthServiceInterface',
+            'App\Services\AuthService'
+        );
     }
 }
