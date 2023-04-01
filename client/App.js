@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useContext } from "react";
 
-export default function App() {
+import { NavigationContainer } from "@react-navigation/native";
+
+import AuthStack from "./navigation/AuthStack";
+import { useFonts } from "expo-font";
+import AppStack from "./navigation/AppStack";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
+
+function App() {
+  const [fontsLoaded] = useFonts({
+    PoppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
+    PoppinsMedium: require("./assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("./assets/fonts/Poppins-Regular.ttf"),
+    PoppinsSemiBold: require("./assets/fonts/Poppins-SemiBold.ttf"),
+    PoppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <Wrapper />
+    </AuthProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function Wrapper() {
+  const { user } = useContext(AuthContext);
+  return (
+    <NavigationContainer>
+      {user ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
+  );
+}
+
+export default App;
