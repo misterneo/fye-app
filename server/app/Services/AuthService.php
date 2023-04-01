@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService implements AuthServiceInterface
@@ -57,7 +56,6 @@ class AuthService implements AuthServiceInterface
 
     public function logout($user)
     {
-        //
         $user->tokens()->delete();
 
         return response()->json([
