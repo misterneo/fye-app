@@ -33,12 +33,19 @@ git clone https://github.com/misterneo/fye-app.git
 2. Install dependencies
 
 - Laravel
+```zsh
+cd server
+```
 
 ```zsh
 composer install
 ```
 
 - React Native
+
+```zsh
+cd client
+```
 
 ```zsh
 npm install
@@ -49,6 +56,10 @@ npm install
 Before starting the application, make sure to start the MySQL server and set up your environment.
 
 - Laravel
+
+```zsh
+cd server
+```
 
 ```zsh
 cp .env.example .env
@@ -69,6 +80,10 @@ php artisan serve
 ```
 
 - React Native
+
+```zsh
+cd client
+```
 
 ```zsh
 npm start
