@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-
 import { NavigationContainer } from "@react-navigation/native";
-
 import AuthStack from "./navigation/AuthStack";
 import { useFonts } from "expo-font";
 import AppStack from "./navigation/AppStack";
 import { AuthContext, AuthProvider } from "./context/AuthContext";
+import Loading from "./components/Loading";
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -28,10 +27,10 @@ function App() {
 }
 
 function Wrapper() {
-  const { user } = useContext(AuthContext);
+  const { user, appLoading } = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {user ? <AppStack /> : <AuthStack />}
+      {appLoading ? <Loading /> : user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

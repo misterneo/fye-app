@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-// import * as Device from "expo-device";
+import * as Device from "expo-device";
 import {
   Image,
   SafeAreaView,
@@ -16,15 +16,20 @@ import { globalStyles } from "../../styles/global.styles";
 import { styles } from "./Auth.styles";
 
 function Login({ navigation }) {
-  const { login } = useContext(AuthContext);
+  const { authenticate, isLoading } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
   const onSubmit = () => {
-    login();
-    // login({ setErrors, email, password, device_name: Device.deviceName });
+    authenticate({
+      action: "login",
+      setErrors,
+      email,
+      password,
+      device_name: Device.deviceName,
+    });
   };
 
   return (
@@ -39,6 +44,9 @@ function Login({ navigation }) {
             onChangeText={(text) => setEmail(text)}
             style={styles.inputStyle}
             placeholder="Email"
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            autoCorrect={false}
           />
           <InputError error={errors.email} />
         </View>
@@ -57,7 +65,11 @@ function Login({ navigation }) {
         <TouchableOpacity>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
-        <AuthButton value={"Login"} onPress={() => onSubmit()} />
+        <AuthButton
+          value={"Login"}
+          onPress={() => onSubmit()}
+          isLoading={isLoading}
+        />
 
         <View style={styles.alreadyHaveAccountContainer}>
           <Text style={styles.already}>Don't have an account?</Text>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -13,6 +13,7 @@ import { styles } from "./Auth.styles";
 import { globalStyles } from "../../styles/global.styles";
 import AuthButton from "../../components/AuthButton";
 import InputError from "../../components/InputError";
+import { AuthContext } from "../../context/AuthContext";
 
 function Register({ navigation }) {
   const [name, setName] = useState("");
@@ -21,7 +22,18 @@ function Register({ navigation }) {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const onSubmit = () => {};
+  const { authenticate, isLoading } = useContext(AuthContext);
+
+  const onSubmit = () => {
+    authenticate({
+      action: "register",
+      setErrors,
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+    });
+  };
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -35,6 +47,7 @@ function Register({ navigation }) {
             onChangeText={(text) => setName(text)}
             style={styles.inputStyle}
             placeholder="Full name"
+            autoCapitalize="words"
           />
           <InputError error={errors.name} />
         </View>
@@ -45,6 +58,7 @@ function Register({ navigation }) {
             onChangeText={(text) => setEmail(text)}
             style={styles.inputStyle}
             placeholder="Email"
+            autoCapitalize="none"
           />
           <InputError error={errors.email} />
         </View>
@@ -71,7 +85,11 @@ function Register({ navigation }) {
           <InputError error={errors.password_confirmation} />
         </View>
 
-        <AuthButton value={"Register"} onPress={() => onSubmit()} />
+        <AuthButton
+          isLoading={isLoading}
+          value={"Register"}
+          onPress={() => onSubmit()}
+        />
 
         <View style={styles.alreadyHaveAccountContainer}>
           <Text style={styles.already}>Already have an account?</Text>
