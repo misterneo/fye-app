@@ -89,6 +89,8 @@ cd client
 npm start
 ```
 
+Please note that if you're using an external device, you need to expose the application to your local network. To do so, run this command instead: `php artisan serve --host 0.0.0.0`. Also, go to the client/api/index.js file in the frontend application and update the base URL endpoint with your machine's internal IP address.
+
 ## Auth Integration
 
 Currently, the server folder only implements the authentication logic using Laravel Sanctum. Sanctum is a lightweight authentication system for Laravel applications that provides a simple way to authenticate users and issue API tokens. The AuthService class is responsible for handling the authentication logic, such as registering a user, logging in a user, generating tokens, and verifying user credentials.
